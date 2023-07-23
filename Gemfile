@@ -54,6 +54,8 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "dotenv-rails"
+  gem "rubocop-rails", "~> 2.20"
+  gem "rubocop-rspec", "~> 2.22"
 end
 
 group :development do
@@ -72,4 +74,9 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'shoulda-matchers'
+  gem 'rails-controller-testing'
 end
+
+
+gem "rubocop-factory_bot", "~> 2.23"
