@@ -27,6 +27,8 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+gem "devise", "~> 4.9"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -57,6 +59,8 @@ group :development, :test do
   gem "dotenv-rails"
   gem "rubocop-rails", "~> 2.20"
   gem "rubocop-rspec", "~> 2.22"
+  gem "rubocop-factory_bot", "~> 2.23"
+  gem 'launchy'
 end
 
 group :development do
@@ -78,6 +82,3 @@ group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
 end
-
-
-gem "rubocop-factory_bot", "~> 2.23"
