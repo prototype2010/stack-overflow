@@ -1,18 +1,15 @@
 class AnswersController < ApplicationController
-  before_action :load_question, only: %i[index show edit new create]
+  before_action :authenticate_user!, except: %i[show]
+  before_action :load_question, only: %i[show edit create]
   before_action :load_answer, only: %i[destroy edit show update]
 
-  def index
-    @answers = @question.answers
-  end
-
   def create
-    @answer = @question.answers.build(answer_params)
+    @answer = @question.answers.build(**answer_params, author: current_user)
 
     if @answer.save
-      redirect_to answer_path(@answer)
+      redirect_to question_path(@question)
     else
-      render :new
+      render 'questions/show'
     end
   end
 
@@ -26,14 +23,10 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy
-    redirect_to question_answers_path(@answer.question)
+    redirect_to questions_path(@answer.question)
   end
 
   def show; end
-
-  def new
-    @answer = Answer.new
-  end
 
   def edit; end
 

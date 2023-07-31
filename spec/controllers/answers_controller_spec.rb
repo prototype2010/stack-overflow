@@ -1,20 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+  let(:user) { create(:user) }
   let(:question) { create(:question, :with_answers) }
   let(:answers) { question.answers }
-
-  describe 'GET #index' do
-    before { get :index, params: { question_id: question.id } }
-
-    it 'load all answers to the question' do
-      expect(assigns(:answers)).to match_array(answers)
-    end
-
-    it 'renders index' do
-      expect(response).to render_template(:index)
-    end
-  end
 
   describe 'GET #show' do
     let(:answer) { answers.first }
@@ -33,7 +22,10 @@ RSpec.describe AnswersController, type: :controller do
   describe 'GET #edit' do
     let(:answer) { answers.first }
 
-    before { get :edit, params: { question_id: question.id, id: answer.id } }
+    before do
+      login(user)
+      get :edit, params: { question_id: question.id, id: answer.id }
+    end
 
     it 'assigns correct answer' do
       expect(assigns(:answer)).to eq(answer)
@@ -44,20 +36,10 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe 'GET #new' do
-    before { get :new, params: { question_id: question.id } }
-
-    it 'assigns correct answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
-    it 'renders proper template' do
-      expect(response).to render_template(:new)
-    end
-  end
-
   describe 'DELETE #destroy' do
     let!(:question) { create(:question, :with_answers) }
+
+    before { login(user) }
 
     it 'changes answers count' do
       expect { delete :destroy, params: { id: question.answers.first.id } }
@@ -73,6 +55,8 @@ RSpec.describe AnswersController, type: :controller do
     let!(:question) { create(:question, :with_answers) }
     let(:answer_attributes) { { answer: attributes_for(:answer) } }
 
+    before { login(user) }
+
     context 'with valid params' do
       it 'creates answer successfully' do
         expect { post :create, params: { question_id: question.id, **answer_attributes } }
@@ -82,23 +66,23 @@ RSpec.describe AnswersController, type: :controller do
       it 'redirects to new' do
         post :create, params: { question_id: question.id, **answer_attributes }
 
-        expect(response).to redirect_to(assigns(:answer))
+        expect(response).to redirect_to(question_path(question))
       end
     end
 
     context 'with invalid params' do
       let!(:question) { create(:question, :with_answers) }
-      let(:answer_attributes) { { answer: attributes_for(:answer, :invalid_body) } }
+      let(:answer_attributes) { attributes_for(:answer, :invalid_body) }
 
       it 'does not create answer' do
-        expect { post :create, params: { question_id: question.id, **answer_attributes } }
+        expect { post :create, params: { question_id: question.id, answer: answer_attributes } }
           .not_to change(Answer, :count)
       end
 
-      it 'redirects to new' do
-        post :create, params: { question_id: question.id, **answer_attributes }
+      it 'redirects to question path' do
+        post :create, params: { question_id: question.id, answer: answer_attributes }
 
-        expect(response).to render_template(:new)
+        expect(response).to render_template('questions/show')
       end
     end
   end
@@ -107,6 +91,8 @@ RSpec.describe AnswersController, type: :controller do
     let!(:question) { create(:question, :with_answers) }
     let(:answer) { question.answers.first }
     let(:answer_attributes) { { body: 'new body' } }
+
+    before { login(user) }
 
     context 'with valid params' do
       before { patch :update, params: { id: answer.id, answer: answer_attributes } }
