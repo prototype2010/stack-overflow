@@ -1,3 +1,9 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import "@hotwired/turbo-rails"
+
+//= require jquery
+
 import "controllers"
+
+import Rails from '@rails/ujs';
+
+Rails.start();

@@ -5,11 +5,11 @@ describe 'user can delete their questions', "
   As an authenticated user
   I'd like to be able to delete my question
 " do
-  let(:user) { create(:user) }
+  let(:user) { create(:user)  }
   let(:question) { create(:question, :with_answers) }
 
   describe 'Sucessful delete' do
-    it 'own question can be deleted' do
+    it 'own question can be deleted', js: true do
       login(question.author)
       visit questions_path
       click_on 'Delete'
