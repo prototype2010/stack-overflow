@@ -14,7 +14,7 @@ describe 'user can create answer', "
       visit question_path(question)
     end
 
-    scenario 'responds a question', js: true do
+    it 'responds a question', js: true do
       response_text = 'response 1234'
 
       fill_in 'Respond', with: response_text
@@ -25,7 +25,7 @@ describe 'user can create answer', "
       expect(page).to have_content response_text
     end
 
-    scenario 'asks question with errors', js: true do
+    it 'asks question with errors', js: true do
       click_on 'Publish response'
 
       expect(page).to have_content "Body can't be blank"
@@ -33,7 +33,7 @@ describe 'user can create answer', "
   end
 
   describe 'Unathenticated user' do
-    scenario 'responds to a question' do
+    it 'responds to a question' do
       visit question_path(question)
 
       expect(page).not_to have_content 'Publish response'

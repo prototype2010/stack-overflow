@@ -14,7 +14,7 @@ describe 'user can edit my own question', "
       click_on 'Edit'
     end
 
-    scenario 'edits question', js: true do
+    it 'edits question', js: true do
       new_title = 'New title'
       new_body = 'New body'
 
@@ -28,7 +28,7 @@ describe 'user can edit my own question', "
       end
     end
 
-    scenario 'asks question with errors', js: true do
+    it 'asks question with errors', js: true do
       fill_in 'Title', with: ''
       fill_in 'Body', with: ''
       click_on 'Update question'

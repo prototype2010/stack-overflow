@@ -135,9 +135,10 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      before { patch :update, params:
+      before do
+        patch :update, params:
         { id: question, question: attributes_for(:question, :invalid_title) }, xhr: true
-      }
+      end
 
       it 'does not change question' do
         default_factory_attrs = attributes_for(:question)

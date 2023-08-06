@@ -6,7 +6,7 @@ describe 'user can edit answer', "
   I'd like to be able to respond the question
 " do
   let!(:question) { create(:question, :with_answers) }
-  let!(:answer_to_edit) {question.answers.first}
+  let!(:answer_to_edit) { question.answers.first }
 
   describe 'Authenticated user' do
     before do
@@ -15,7 +15,7 @@ describe 'user can edit answer', "
       click_on 'Edit'
     end
 
-    scenario 'responds a question', js: true do
+    it 'responds a question', js: true do
       new_answer_text = 'response 1234'
 
       within("#edit_form_#{answer_to_edit.id}") do |node|
@@ -28,7 +28,7 @@ describe 'user can edit answer', "
       end
     end
 
-    scenario 'edits question with errors', js: true do
+    it 'edits question with errors', js: true do
       within("#edit_form_#{answer_to_edit.id}") do |node|
         node.fill_in 'Respond', with: ''
         node.click_on 'Update response'
@@ -39,7 +39,7 @@ describe 'user can edit answer', "
   end
 
   describe 'Unathenticated user' do
-    scenario 'responds to a question' do
+    it 'responds to a question' do
       visit question_path(question)
 
       expect(page).not_to have_content 'Publish response'

@@ -15,7 +15,7 @@ describe 'user can delete their answers', "
   end
 
   describe 'Sucessful delete' do
-    scenario 'own answer can be deleted', js: true do
+    it 'own answer can be deleted', js: true do
       fill_in 'Respond', with: answer_text
       click_on 'Publish response'
       click_on 'Delete'
@@ -24,7 +24,7 @@ describe 'user can delete their answers', "
   end
 
   describe 'Unsuccessful delete' do
-    scenario "delete is not available for some one else's answer" do
+    it "delete is not available for some one else's answer" do
       expect(page).not_to have_content 'Delete'
     end
   end

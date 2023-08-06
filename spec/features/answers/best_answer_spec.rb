@@ -14,8 +14,7 @@ describe 'user can choose best answer', "
       visit question_path(question)
     end
 
-    scenario 'responds a question', js: true do
-
+    it 'responds a question', js: true do
       within("#answer_#{best_answer.id}") do |node|
         node.click_on 'Set best'
       end
@@ -27,7 +26,7 @@ describe 'user can choose best answer', "
   end
 
   describe 'Unathenticated user' do
-    scenario 'responds to a question' do
+    it 'responds to a question' do
       visit question_path(question)
 
       expect(page).not_to have_content 'Set best'

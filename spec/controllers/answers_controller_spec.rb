@@ -10,7 +10,7 @@ RSpec.describe AnswersController, type: :controller do
 
     before do
       login(user)
-      get :edit, params: { question_id: question.id, id: answer.id },xhr: true
+      get :edit, params: { question_id: question.id, id: answer.id }, xhr: true
     end
 
     it 'assigns correct answer' do
@@ -28,12 +28,12 @@ RSpec.describe AnswersController, type: :controller do
     before { login(user) }
 
     it 'changes answers count' do
-      expect { delete :destroy, params: { id: question.answers.first.id },xhr: true }
+      expect { delete :destroy, params: { id: question.answers.first.id }, xhr: true }
         .to change(Answer, :count).by(-1)
     end
 
     it 'redirects to question answers' do
-      delete :destroy, params: { id: question.answers.first.id },xhr: true
+      delete :destroy, params: { id: question.answers.first.id }, xhr: true
 
       expect(response).to render_template(:destroy)
     end

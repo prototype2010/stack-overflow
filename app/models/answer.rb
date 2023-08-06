@@ -9,8 +9,8 @@ class Answer < ApplicationRecord
   private
 
   def check_best_answer
-    return unless self.best?
+    return unless best?
 
-    self.question.answers.where.not(id: self.id).update_all(best:false)
+    question.answers.where.not(id: id).update_all(best: false)
   end
 end
