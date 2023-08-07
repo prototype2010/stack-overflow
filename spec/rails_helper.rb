@@ -33,7 +33,11 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::IntegrationHelpers, type: :feature
   config.include FeatureHelpers, type: :feature
+
+  Capybara.javascript_driver = :selenium_chrome
+  Webdrivers::Chromedriver.required_version = '114.0.5735.90'
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{Rails.root.join('spec/fixtures')}"
 

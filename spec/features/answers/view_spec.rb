@@ -14,7 +14,7 @@ describe 'user can see answers', "
       visit question_path(question)
     end
 
-    it 'see answers to the question' do
+    it 'see answers to the question', js: true do
       answer1, answer2 = question.answers
 
       expect(page).to have_content answer1.body

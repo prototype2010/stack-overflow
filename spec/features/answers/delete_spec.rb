@@ -15,7 +15,7 @@ describe 'user can delete their answers', "
   end
 
   describe 'Sucessful delete' do
-    it 'own answer can be deleted' do
+    it 'own answer can be deleted', js: true do
       fill_in 'Respond', with: answer_text
       click_on 'Publish response'
       click_on 'Delete'

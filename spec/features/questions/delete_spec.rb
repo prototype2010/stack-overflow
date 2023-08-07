@@ -9,7 +9,7 @@ describe 'user can delete their questions', "
   let(:question) { create(:question, :with_answers) }
 
   describe 'Sucessful delete' do
-    it 'own question can be deleted' do
+    it 'own question can be deleted', js: true do
       login(question.author)
       visit questions_path
       click_on 'Delete'
