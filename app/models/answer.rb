@@ -1,6 +1,8 @@
 class Answer < ApplicationRecord
   before_update :check_best_answer
 
+  has_many_attached :files
+
   belongs_to :question
   belongs_to :author, class_name: 'User'
 

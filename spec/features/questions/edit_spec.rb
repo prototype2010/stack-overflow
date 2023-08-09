@@ -5,13 +5,24 @@ describe 'user can edit my own question', "
   As an authenticated user
   I'd like to be able to edit my own question
 " do
-  let(:question) { create(:question) }
+  let(:question) { create(:question, :with_files) }
 
   describe 'Authenticated user' do
     before do
       login(question.author)
       visit questions_path
       click_on 'Edit'
+    end
+
+    it 'attaches files during update', js: true do
+      fill_in 'Title', with: 'Test question'
+      fill_in 'Body', with: 'text text text'
+      attach_file 'File', ["#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}"]
+
+      click_on 'Update question'
+      visit question_path(question.id)
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
     end
 
     it 'edits question', js: true do
