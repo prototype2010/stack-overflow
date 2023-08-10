@@ -36,5 +36,4 @@
 .env.test.local
 .env.development.local
 #keys
-keys
-!keys/.keep
+keys/*.json
