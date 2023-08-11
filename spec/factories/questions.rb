@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :question do
-    title { 'MyString' }
-    body { 'MyText' }
+    title { 'Question title' }
+    body { 'Question body' }
     author { create(:user) }
 
     trait :invalid_title do
@@ -15,6 +15,15 @@ FactoryBot.define do
     trait :with_answers do
       after(:create) do |question|
         create_list(:answer, 2, question: question)
+      end
+    end
+
+    trait :with_files do
+      files do
+        [
+          Rack::Test::UploadedFile.new("#{Rails.root.join('spec/rails_helper.rb')}"),
+          Rack::Test::UploadedFile.new("#{Rails.root.join('spec/spec_helper.rb')}")
+        ]
       end
     end
   end

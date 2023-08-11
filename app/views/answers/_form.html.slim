@@ -2,5 +2,7 @@
 - @answer ||= Answer.new
 = form_with model: [@question, @answer], local: false do |f|
   = f.label :body, 'Respond'
-  = f.text_field :body, name: 'answer[body]'
+  = f.text_field :body
+  = f.label :files
+  = f.file_field :files, multiple: true, direct_upload: true
   = f.submit 'Publish response'

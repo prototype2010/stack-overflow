@@ -25,6 +25,17 @@ describe 'user can create answer', "
       expect(page).to have_content response_text
     end
 
+    it 'responds a question and attaches files', js: true do
+      response_text = 'response 1234'
+
+      fill_in 'Respond', with: response_text
+      attach_file 'Files', ["#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}"]
+      click_on 'Publish response'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
     it 'asks question with errors', js: true do
       click_on 'Publish response'
 

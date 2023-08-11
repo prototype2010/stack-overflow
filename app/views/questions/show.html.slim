@@ -1,7 +1,17 @@
 h1= @question.title
 p= @question.body
 
-= render 'answers/form'
+-if @question.files.attached?
+  -@question.files.each do |file|
+    div(id="attachment_#{file.id}")
+      p= link_to file.filename.to_s, url_for(file), id: file.signed_id
+      p= link_to 'x',
+              purge_attachment_url(file),
+              method: :delete,
+              remote: true,
+              id:"delete_attachment_#{file.filename.to_s}"
+-if current_user.present?
+  = render 'answers/form'
 
 .answer-errors
   = render 'shared/errors', resource: @answer
