@@ -7,5 +7,18 @@
   = f.text_area :body
   = f.label :files
   = f.file_field :files, multiple: true, direct_upload: true
+  hr
+  p Add link:
+  p
+
+    = f.fields_for :links do |link|
+      = render 'link_fields', f: f
+    .links
+      = link_to_add_association 'add link', f, :links
+  hr
+    p Add reward:
+    = render 'reward_fields', f: f
+  hr
   = f.submit 'Ask'
+
 

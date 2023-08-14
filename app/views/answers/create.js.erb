@@ -2,6 +2,5 @@ $('.answer-errors').html('<%= render 'shared/errors', resource: @answer %>')
 
 <% if @answer.persisted? %>
   $('.answers').append('<%= j render @answer %>')
-  $('#answer_body').val('');
-  $('#answer_files').val('');
+  $('#new_answer_form input').each((_, el) => 	$(el).val(''));
 <% end %>

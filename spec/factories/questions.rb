@@ -12,9 +12,21 @@ FactoryBot.define do
       body { nil }
     end
 
+    trait :with_link do
+      after(:create) do |question|
+        create(:link, linkable: question)
+      end
+    end
+
     trait :with_answers do
       after(:create) do |question|
         create_list(:answer, 2, question: question)
+      end
+    end
+
+    trait :with_reward do
+      after(:create) do |question|
+        create(:reward, rewardable: question)
       end
     end
 

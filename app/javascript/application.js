@@ -2,9 +2,15 @@
 
 //= require jquery
 //= require activestorage
+//= require cocoon
 
 import "controllers"
+import {GistClient} from "gist-client";
 
 import Rails from '@rails/ujs';
+
+window.GistClient = new GistClient()
+
+
 
 Rails.start();

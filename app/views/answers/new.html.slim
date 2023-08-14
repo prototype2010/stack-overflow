@@ -1,9 +1,0 @@
-= render 'shared/errors', resource: @question
-
-= form_with model: Answer.new do |f|
-  = f.label :Respond
-  = f.text_field :body
-  = f.label :files
-  = f.file_field :files, multiple: true, direct_upload: true
-  = f.submit 'Respond'
-
