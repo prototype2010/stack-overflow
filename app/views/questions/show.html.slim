@@ -1,6 +1,16 @@
 h1= @question.title
 p= @question.body
 
+p Links
+ul(id='question_links')
+  - @question.links.each do |link|
+    li(id="link_#{link.id}")
+      - if gist_url?(link.url)
+        = render 'shared/gist_loader', link: link
+      - else
+        a(href="#{link.url}")= link.name
+        = button_to 'Remove link', delete_link_path(link.id), method: :delete, remote: true
+hr
 -if @question.files.attached?
   -@question.files.each do |file|
     div(id="attachment_#{file.id}")
@@ -10,12 +20,21 @@ p= @question.body
               method: :delete,
               remote: true,
               id:"delete_attachment_#{file.filename.to_s}"
+hr
 -if current_user.present?
   = render 'answers/form'
+hr
+div(id='reward')
+  - if @question.reward.present?
+    p Reward:
+    p Description:
+    = @question.reward.description
+    p Image
+    = image_tag(url_for(@question.reward.image), size: '100x100')
 
 .answer-errors
   = render 'shared/errors', resource: @answer
-
+hr
 p 'Answers'
 .answers
   = render @question.answers.order(best: :desc)

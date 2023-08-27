@@ -1,8 +1,14 @@
 = render 'shared/errors', resource: @answer
-- @answer ||= Answer.new
-= form_with model: [@question, @answer], local: false do |f|
+- @answer
+= form_with model: [@question, @answer], local: false, id: 'new_answer_form' do |f|
   = f.label :body, 'Respond'
   = f.text_field :body
   = f.label :files
   = f.file_field :files, multiple: true, direct_upload: true
+  p Add link:
+  p
+    = f.fields_for :links do |link|
+      = render 'link_fields', f: f
+    .links
+      = link_to_add_association 'add link', f, :links
   = f.submit 'Publish response'

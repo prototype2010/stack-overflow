@@ -1,0 +1,9 @@
+p Received rewards:
+ul
+  - @rewards.each do |reward|
+    li
+      p
+        = "Received for `#{reward.rewardable.title}`"
+      p
+        = reward.description
+      = image_tag(url_for(reward.image), size: '100x100')

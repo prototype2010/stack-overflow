@@ -1,0 +1,28 @@
+javascript:
+	(() => {
+		const loader = () => {
+			const node = $("#link_#{link.id}")
+
+			window.GistClient.setToken("#{ENV['GITHUB_TOKEN']}")
+			window.GistClient
+							.getOneById("#{gist_id(link.url)}")
+							.then(result => {
+								node.text(result.description)
+							})
+							.catch(() => {
+								node.text('Failed to load gist')
+							})
+							.finally(() => {
+								node.append('#{ render "shared/remove_link_button", link: link }')
+							})
+		}
+
+		if (document.readyState === 'complete') {
+			loader()
+		} else {
+			document.addEventListener('DOMContentLoaded', loader )
+		}
+	})()
+
+
+

@@ -1,16 +1,18 @@
 li(id="question_#{question.id}")
+  hr
   = link_to question.title, question_path(question)
   p.question(id="question_title_#{question.id}") =question.title
   p.question(id="question_body_#{question.id}") =question.body
   - if question.author == current_user
     .panel
-      = button_to 'Delete', question_path(question),  method: :delete, remote: true
+      = button_to 'Delete', question_path(question),  method: :delete, remote: true, data: { turbo: false}
       = button_to 'Edit', edit_question_path(question), method: :get, remote: true, id: "edit_#{question.id}"
       = button_to 'Cancel', edit_question_path(question),
               method: :get,
               remote: true,
               id: "cancel_#{question.id}", style: 'display: none'
     .errors(style="color:red" id="errors_#{question.id}")
+    hr
     .edit_form(hidden=true id="edit_form_#{question.id}")
       = form_with model: question, method: :put, local: false do |f|
         = f.label :title
@@ -19,4 +21,24 @@ li(id="question_#{question.id}")
         = f.text_field :body
         = f.label :files
         = f.file_field :files, multiple: true, direct_upload: true
+        hr
+        = f.fields_for :links do |link_form|
+          p Link
+          .field
+            = link_form.label :name
+            = link_form.text_field :name
+          .field
+            = link_form.label :url
+            = link_form.text_field :url
+        .links
+          = link_to_add_association 'add link', f, :links
+        hr
+          p Reward:
+          = f.fields_for :reward, question.reward || question.build_reward  do |reward|
+            p
+            = reward.label :description
+            = reward.text_field :description
+            p
+            = reward.label :image
+            = reward.file_field :image, direct_upload: true
         = f.submit 'Update question'

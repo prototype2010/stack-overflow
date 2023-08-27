@@ -1,0 +1,7 @@
+= f.fields_for :reward do |reward|
+  p
+  = reward.label :description
+  = reward.text_field :description
+  p
+  = reward.label :image
+  = reward.file_field :image, direct_upload: true
