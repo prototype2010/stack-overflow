@@ -1,0 +1,34 @@
+- if can_vote?(resource)
+  div(name='votes')
+    p
+      = 'Votes summary: '
+      span(id="#{resource.class.name.downcase}_votes_count_#{resource.id}")
+        = resource.votes_sum
+    p
+      = button_to '+1',
+              create_vote_path(class: resource.class.name, parent_id: resource.id, value: 1),
+              remote: true,
+
+              form: { class: 'upvote',
+                      name: "#{resource.class.name.downcase}_upvote_#{resource.id}",
+                      hidden: upvoted?(resource)},
+              data:{format: :json},
+              method: :post
+    p
+      = button_to '-1',
+              create_vote_path(class: resource.class.name, parent_id: resource.id, value: -1),
+              remote: true,
+              form: { class: 'downvote',
+                      name: "#{resource.class.name.downcase}_downvote_#{resource.id}",
+                      hidden: downvoted?(resource),},
+              data: {format: :json},
+              method: :post
+    p
+      = button_to 'delete my vote',
+              delete_vote_path(class: resource.class.name, parent_id: resource.id),
+              remote: true,
+              form: { class: 'destroy',
+                      name: "#{resource.class.name.downcase}_destroy_#{resource.id}",
+                      hidden: deletable?(resource)},
+              data: {format: :json},
+              method: :delete

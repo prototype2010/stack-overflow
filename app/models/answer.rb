@@ -1,10 +1,8 @@
 class Answer < ApplicationRecord
+  include Linkable
+  include Votable
+
   before_update :set_best_answer
-
-  has_many :links, dependent: :destroy, as: :linkable
-  has_many_attached :files
-
-  accepts_nested_attributes_for :links, reject_if: :all_blank
 
   belongs_to :question
   belongs_to :author, class_name: 'User'
@@ -28,6 +26,6 @@ class Answer < ApplicationRecord
     return unless question.reward.present?
 
     UserReward.where(reward: question.reward).destroy_all
-    self.author.rewards << question.reward
+    author.rewards << question.reward
   end
 end

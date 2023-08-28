@@ -1,6 +1,6 @@
 module LinksHelper
-  GIST_REGEXP = /^https:\/\/gist.github.com\/[a-zA-Z0-9]*\/[a-zA-Z0-9]*$/.freeze
-  GIST_ID_REGEXP = /^*.*\/([a-zA-Z0-9]*)$/.freeze
+  GIST_REGEXP = %r{^https://gist.github.com/[a-zA-Z0-9]*/[a-zA-Z0-9]*$}.freeze
+  GIST_ID_REGEXP = %r{^*.*/([a-zA-Z0-9]*)$}.freeze
 
   def gist_url?(url)
     GIST_REGEXP.match?(url)

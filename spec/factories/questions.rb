@@ -24,9 +24,21 @@ FactoryBot.define do
       end
     end
 
+    trait :with_answers_and_votes do
+      after(:create) do |question|
+        create_list(:answer, 1, :with_votes, question: question)
+      end
+    end
+
     trait :with_reward do
       after(:create) do |question|
         create(:reward, rewardable: question)
+      end
+    end
+
+    trait :with_votes do
+      after(:create) do |question|
+        create_list(:vote, 5, votable: question)
       end
     end
 
