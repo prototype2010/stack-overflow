@@ -3,7 +3,7 @@ class VotesController < ApplicationController
     record.check_vote(params[:value], current_user)
 
     respond_to do |format|
-      format.json { render json: { **record_vote_details } }
+      format.json { render json: vote_action_details }
     end
   end
 
@@ -11,13 +11,13 @@ class VotesController < ApplicationController
     record.destroy_user_votes(current_user)
 
     respond_to do |format|
-      format.json { render json: record_vote_details }
+      format.json { render json: vote_action_details }
     end
   end
 
   private
 
-  def record_vote_details
+  def vote_action_details
     {
       count: record.votes_sum,
       parent_class: record.class.name,
