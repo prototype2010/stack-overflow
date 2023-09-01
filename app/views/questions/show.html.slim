@@ -1,6 +1,6 @@
 h1= @question.title
 p= @question.body
-
+= render 'shared/votes', resource: @question
 p Links
 ul(id='question_links')
   - @question.links.each do |link|
