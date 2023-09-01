@@ -1,0 +1,6 @@
+p Comments
+div(id="comments_#{resource.class.name}_#{resource.id}")
+    -resource.comments.each do |comment|
+      =render 'comments/comment', resource: comment
+    p(id="errors_#{resource.class.name}_#{resource.id}")
+      =render 'comments/form', resource: resource

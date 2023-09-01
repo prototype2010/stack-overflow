@@ -44,4 +44,29 @@ describe 'user can create question', "
 
     expect(page).not_to have_content 'Ask question'
   end
+
+  context 'Multiple sessions' do
+    it 'created question is visible for all users', js: true do
+      Capybara.using_session('user') do
+        login(user)
+        visit questions_path
+      end
+
+      Capybara.using_session('guest') do
+        visit questions_path
+      end
+
+      Capybara.using_session('user') do
+        click_on 'Ask question'
+        fill_in 'Title', with: 'Test question'
+        fill_in 'Body', with: 'text text text'
+
+        click_on 'Ask'
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_link 'Test question'
+      end
+    end
+  end
 end

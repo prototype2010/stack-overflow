@@ -1,7 +1,8 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[show]
-  before_action :load_question, only: %i[show create]
-  before_action :load_answer, only: %i[destroy edit show update]
+  before_action :authenticate_user!
+  before_action :load_question, only: %i[create]
+  before_action :load_answer, only: %i[destroy edit update]
+  after_action :publish_answer, only: %i[create]
 
   def create
     @answer = @question.answers.build(**answer_params, author: current_user)
@@ -22,8 +23,6 @@ class AnswersController < ApplicationController
     @answer.destroy
   end
 
-  def show; end
-
   def edit; end
 
   private
@@ -34,6 +33,16 @@ class AnswersController < ApplicationController
 
   def load_answer
     @answer = Answer.find_by(id: params[:id])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast("answers/#{@question.id}",
+                                 ApplicationController.render(partial: 'answers/answer', locals: {
+                                                                answer: @answer,
+                                                                user: current_user
+                                                              }))
   end
 
   def answer_params

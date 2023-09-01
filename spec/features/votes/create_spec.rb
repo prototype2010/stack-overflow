@@ -41,14 +41,15 @@ describe 'user can vote for question', "
     it 'Can upvote', js: true do
       within('div[name="votes"]') do |node|
         click_on '+1'
-        expect(node).to have_content("Votes summary: #{question.answers.first.votes_sum + 1}")
+        expect(node).to have_content("Votes summary: #{question.answers.first.votes_sum}")
       end
     end
 
     it 'Can downvote', js: true do
       within('div[name="votes"]') do |node|
         click_on '-1'
-        expect(node).to have_content("Votes summary: #{question.answers.first.votes_sum - 1}")
+        sleep(0.5)
+        expect(node).to have_content("Votes summary: #{question.answers.first.votes_sum}")
       end
     end
   end

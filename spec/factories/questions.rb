@@ -42,6 +42,12 @@ FactoryBot.define do
       end
     end
 
+    trait :with_comments do
+      after(:create) do |question|
+        create_list(:comment, 1, commentable: question)
+      end
+    end
+
     trait :with_files do
       files do
         [

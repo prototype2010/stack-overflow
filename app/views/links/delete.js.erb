@@ -1,5 +1,6 @@
 <% if @link.linkable.class == Answer %>
-  $("#answer_<%= @link.linkable.id %>").replaceWith('<%= j(render 'answers/answer', answer: @link.linkable) %>')
+  $("#answer_<%= @link.linkable.id %>")
+    .replaceWith('<%= j(render 'answers/answer', answer: @link.linkable, user: current_user) %>')
 <% end %>
 
 $("#link_<%= @link.id %>").remove()

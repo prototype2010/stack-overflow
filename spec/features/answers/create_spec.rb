@@ -50,4 +50,28 @@ describe 'user can create answer', "
       expect(page).not_to have_content 'Publish response'
     end
   end
+
+  context 'Multiple sessions' do
+    let(:response_text) { 'response 1234' }
+
+    it 'created answer is visible for all users', js: true do
+      Capybara.using_session('user') do
+        login(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'Respond', with: response_text
+        click_on 'Publish response'
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content response_text
+      end
+    end
+  end
 end

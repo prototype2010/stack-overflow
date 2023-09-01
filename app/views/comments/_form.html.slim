@@ -1,0 +1,7 @@
+div(id="new_comment_form_#{resource.class.name}_#{resource.id}")
+  = form_with method: :post,
+            url: create_comment_path(class: resource.class.name,parent_id: resource.id),
+            local: false do |f|
+      = f.label :body, 'New comment', for: "new_comment_#{resource.class.name}_#{resource.id}"
+      = f.text_field :body, id: "new_comment_#{resource.class.name}_#{resource.id}"
+      = f.submit 'Create new comment'

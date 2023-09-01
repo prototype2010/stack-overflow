@@ -9,8 +9,14 @@ FactoryBot.define do
     end
 
     trait :with_votes do
-      after(:create) do |question|
-        create_list(:vote, 5, votable: question)
+      after(:create) do |answer|
+        create_list(:vote, 5, votable: answer)
+      end
+    end
+
+    trait :with_comments do
+      after(:create) do |answer|
+        create_list(:comment, 1, commentable: answer)
       end
     end
   end
