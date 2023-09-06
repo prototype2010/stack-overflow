@@ -36,3 +36,17 @@ App.cable.subscriptions.create('AnswersChannel', {
 	},
 	received: (data) => $('.answers').append(data)
 })
+
+App.cable.subscriptions.create('CommentsChannel', {
+	connected: function () {
+		const questionsPathRegexp = /^\/questions\/(\d*)$/
+		const path = window.location.pathname
+
+		if(questionsPathRegexp.test(path)) {
+			const [,questionId] = path.match(questionsPathRegexp)
+
+			this.perform('follow', {questionId})
+		}
+	},
+	received: ({data, record_id, record_class}) => $(`#comments_${record_class}_${record_id}`).append(data)
+})

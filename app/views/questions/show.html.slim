@@ -35,7 +35,7 @@ div(id='reward')
 .answer-errors
   = render 'shared/errors', resource: @answer
 hr
-= render 'shared/comments', resource: @question
+= render 'shared/comments', resource: @question, user: current_user
 hr
 p Answers
 .answers

@@ -14,7 +14,7 @@ div(id="answer_#{answer.id}")
           a(href="#{link.url}")= link.name
           =render 'shared/remove_link_button', link: link
   hr
-  = render 'shared/comments', resource: answer
+  = render 'shared/comments', resource: answer, user: user
   hr
   p.answer(id="answer_text_#{answer.id}") =answer.body
   p
