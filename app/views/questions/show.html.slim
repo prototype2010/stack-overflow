@@ -21,7 +21,7 @@ hr
               remote: true,
               id:"delete_attachment_#{file.filename.to_s}"
 hr
--if current_user.present?
+-if can?(:create, Answer)
   = render 'answers/form'
 hr
 div(id='reward')

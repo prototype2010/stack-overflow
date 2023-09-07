@@ -45,8 +45,10 @@ describe 'user can vote for question', "
     end
 
     it 'Vote count is seen', js: true do
+      count = question.answers.first.votes_sum
+
       within('div[name="votes"]') do |node|
-        expect(node).to have_content("Votes summary: #{question.answers.first.votes_sum}")
+        expect(node).to have_content("Votes summary: #{count}")
       end
     end
   end

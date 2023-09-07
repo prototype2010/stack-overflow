@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:user) { create(:user) }
+  let(:user) { answers.first.author }
   let(:question) { create(:question, :with_answers) }
   let(:answers) { question.answers }
 
@@ -25,7 +25,7 @@ RSpec.describe AnswersController, type: :controller do
   describe 'DELETE #destroy' do
     let!(:question) { create(:question, :with_answers) }
 
-    before { login(user) }
+    before { login(question.answers.first.author) }
 
     it 'changes answers count' do
       expect { delete :destroy, params: { id: question.answers.first.id }, xhr: true }

@@ -2,6 +2,8 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: %i[edit show update destroy purge_attachment]
   after_action :publish_question, only: %i[create]
 
+  authorize_resource
+
   def index
     @questions = Question.all
   end
@@ -11,7 +13,8 @@ class QuestionsController < ApplicationController
     @answer = @question.answers.build
   end
 
-  def edit; end
+  def edit
+  end
 
   def new
     @question = Question.new

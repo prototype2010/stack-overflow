@@ -55,8 +55,14 @@ gem 'jquery-rails'
 # dynamic nested forms
 gem "cocoon"
 gem "validate_url"
-#github api
+# github api
 gem "octokit"
+gem "omniauth", "~> 2.1"
+gem "omniauth-github", "~> 2.0"
+gem 'omniauth-google-oauth2'
+gem "omniauth-rails_csrf_protection"
+# roles
+gem "cancancan"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

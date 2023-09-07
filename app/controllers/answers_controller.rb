@@ -4,6 +4,8 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: %i[destroy edit update]
   after_action :publish_answer, only: %i[create]
 
+  authorize_resource
+
   def create
     @answer = @question.answers.build(**answer_params, author: current_user)
     @answer.save
@@ -23,7 +25,8 @@ class AnswersController < ApplicationController
     @answer.destroy
   end
 
-  def edit; end
+  def edit
+  end
 
   private
 

@@ -1,6 +1,8 @@
 class CommentsController < ApplicationController
   after_action :publish_answer, only: %i[create]
 
+  authorize_resource
+
   def create
     @comment = record.comments.build(body: params[:body], author: current_user)
   end

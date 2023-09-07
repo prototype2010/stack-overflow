@@ -21,18 +21,18 @@ div(id="answer_#{answer.id}")
     - answer.files.each do |file|
       div(id="attachment_#{file.id}")
         p= link_to file.filename.to_s, rails_storage_proxy_url(file), id: file.signed_id
-        - if (answer.author == user) || (user == answer.question.author)
+        - if Ability.new(user).can?(:delete, answer)
           p= link_to 'x',
                   purge_attachment_path(file),
                   method: :delete,
                   remote: true,
                   id: "delete_attachment_#{file.filename.to_s}"
 
-  - if answer.question.author == user && !answer.best?
+  - if Ability.new(user).can?(:update, answer.question) && !answer.best?
     = form_with model: answer, method: :put, remote: false do |f|
       = f.check_box :best, checked: true, hidden: true
       = f.submit 'Set best'
-  - if answer.author == user
+  - if Ability.new(user).can?(:delete, answer)
     .panel
       = button_to 'Delete', answer_path(answer),  method: :delete, remote: true
       = button_to 'Edit', edit_answer_path(answer), method: :get, remote: true, id: "edit_#{answer.id}"
