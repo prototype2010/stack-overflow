@@ -1,5 +1,6 @@
 <% if @answer.valid? %>
-  $("#answer_<%= @answer.id %>").replaceWith('<%= j(render 'answer', answer: @answer) %>')
+  $("#answer_<%= @answer.id %>")
+    .replaceWith('<%= j(render 'answer', answer: @answer, user: current_user) %>')
 <% else %>
   $("#errors_<%= @answer.id %>").html('<%= @answer.errors.full_messages.join(',') %>')
 <% end %>

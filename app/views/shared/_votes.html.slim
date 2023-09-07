@@ -1,4 +1,4 @@
-- if can_vote?(resource)
+- if can_vote?(resource, user)
   div(name='votes')
     p
       = 'Votes summary: '
@@ -11,7 +11,7 @@
 
               form: { class: 'upvote',
                       name: "#{resource.class.name.downcase}_upvote_#{resource.id}",
-                      hidden: upvoted?(resource)},
+                      hidden: upvoted?(resource, user)},
               data:{format: :json},
               method: :post
     p
@@ -20,7 +20,7 @@
               remote: true,
               form: { class: 'downvote',
                       name: "#{resource.class.name.downcase}_downvote_#{resource.id}",
-                      hidden: downvoted?(resource),},
+                      hidden: downvoted?(resource, user),},
               data: {format: :json},
               method: :post
     p
@@ -29,6 +29,6 @@
               remote: true,
               form: { class: 'destroy',
                       name: "#{resource.class.name.downcase}_destroy_#{resource.id}",
-                      hidden: deletable?(resource)},
+                      hidden: deletable?(resource, user)},
               data: {format: :json},
               method: :delete

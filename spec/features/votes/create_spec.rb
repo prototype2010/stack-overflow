@@ -39,16 +39,20 @@ describe 'user can vote for question', "
     end
 
     it 'Can upvote', js: true do
+      votes_before = question.answers.first.votes_sum
+
       within('div[name="votes"]') do |node|
         click_on '+1'
-        expect(node).to have_content("Votes summary: #{question.answers.first.votes_sum + 1}")
+        expect(node).to have_content("Votes summary: #{votes_before + 1}")
       end
     end
 
     it 'Can downvote', js: true do
+      votes_before = question.answers.first.votes_sum
+
       within('div[name="votes"]') do |node|
         click_on '-1'
-        expect(node).to have_content("Votes summary: #{question.answers.first.votes_sum - 1}")
+        expect(node).to have_content("Votes summary: #{votes_before - 1}")
       end
     end
   end

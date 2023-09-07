@@ -1,6 +1,6 @@
 h1= @question.title
 p= @question.body
-= render 'shared/votes', resource: @question
+= render 'shared/votes', resource: @question, user: current_user
 p Links
 ul(id='question_links')
   - @question.links.each do |link|
@@ -14,9 +14,9 @@ hr
 -if @question.files.attached?
   -@question.files.each do |file|
     div(id="attachment_#{file.id}")
-      p= link_to file.filename.to_s, url_for(file), id: file.signed_id
+      p= link_to file.filename.to_s, url: rails_storage_proxy_url(file), id: file.signed_id
       p= link_to 'x',
-              purge_attachment_url(file),
+              purge_attachment_path(file),
               method: :delete,
               remote: true,
               id:"delete_attachment_#{file.filename.to_s}"
@@ -35,7 +35,9 @@ div(id='reward')
 .answer-errors
   = render 'shared/errors', resource: @answer
 hr
-p 'Answers'
+= render 'shared/comments', resource: @question, user: current_user
+hr
+p Answers
 .answers
-  = render @question.answers.order(best: :desc)
+  = render @question.answers.order(best: :desc), user: current_user
 

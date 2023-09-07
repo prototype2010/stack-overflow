@@ -1,0 +1,6 @@
+div(id="comment_#{resource.id}")
+  p ="Comment by #{resource.author.email}"
+  p = resource.body
+  -if resource.author == user
+    = button_to 'Delete', delete_comment_path(id: resource.id),  method: :delete, remote: true
+

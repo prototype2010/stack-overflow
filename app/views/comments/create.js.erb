@@ -1,0 +1,9 @@
+<% if @comment.save %>
+  $("#errors_<%= @comment.commentable.class.name %>_<%= @comment.commentable.id %>")
+    .empty()
+  $("#new_comment_<%= @comment.commentable.class.name %>_<%= @comment.commentable.id %>")
+    .val('')
+<% else %>
+  $("#errors_<%= @comment.commentable.class.name %>_<%= @comment.commentable.id %>")
+    .html('<%= render 'shared/errors', resource: @comment %>')
+<% end %>

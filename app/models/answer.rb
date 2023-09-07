@@ -1,6 +1,7 @@
 class Answer < ApplicationRecord
   include Linkable
   include Votable
+  include Commentable
 
   before_update :set_best_answer
 

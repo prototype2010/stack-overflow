@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@rails/actioncable": "^7.0.7-2",
     "gist-client": "^1.1.1",
     "jquery": "^3.7.1"
   }
