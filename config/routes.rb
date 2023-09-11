@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :users,
+             controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+
   root to: 'questions#index'
 
   post 'comments/create', as: 'create_comment'
@@ -12,8 +15,6 @@ Rails.application.routes.draw do
   delete 'links/:id/delete',to: 'links#delete', as: 'delete_link'
 
   delete 'attachments/:id/purge',to: 'attachments#purge', as: 'purge_attachment'
-
-  devise_for :users
 
   resources :questions, shallow: true do
     resources :answers, except: %i[new index] do
