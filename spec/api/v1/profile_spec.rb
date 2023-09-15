@@ -5,17 +5,12 @@ describe 'Profiles API', type: :request do
     { "CONTENT_TYPE": 'application/json' ,
       "ACCEPT": 'application/json'  }
   }
+  let(:api_path) { '/api/v1/profiles/me' }
 
   describe 'GET /api/v1/profiles/me' do
     context 'unauthorized' do
-      it 'with no access token' do
-        get '/api/v1/profiles/me', headers: headers
-        expect(response.status).to eq 401
-      end
-
-      it 'with invalid access token' do
-        get '/api/v1/profiles/me',params: {access_token: '1234'}, headers: headers
-        expect(response.status).to eq 401
+      it_behaves_like 'API Authorizable' do
+        let(:method) { :get }
       end
     end
 
@@ -23,7 +18,7 @@ describe 'Profiles API', type: :request do
       let(:user) { create(:user) }
       let(:access_token) { create(:access_token, resource_owner_id: user.id).token}
 
-      before { get '/api/v1/profiles/me',params: {access_token: access_token}, headers: headers }
+      before { get api_path ,params: {access_token: access_token}, headers: headers }
 
       it 'returns successful status' do
         expect(response).to be_successful
@@ -40,7 +35,6 @@ describe 'Profiles API', type: :request do
           expect(json).to_not have_key attr
         end
       end
-
     end
   end
 end

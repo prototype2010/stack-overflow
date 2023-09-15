@@ -1,7 +1,4 @@
-class Api::V1::ProfilesController < ApplicationController
-  skip_before_action :authenticate_user!
-  before_action :doorkeeper_authorize!
-
+class Api::V1::ProfilesController < Api::V1::BaseController
   def me
     render json: current_resource_owner
   end
