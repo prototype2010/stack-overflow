@@ -5,7 +5,7 @@ describe 'Questions API', type: :request do
     { "CONTENT_TYPE": 'application/json' ,
       "ACCEPT": 'application/json'  }
   }
-  let(:api_path) {'/api/v1/profiles/me' }
+  let(:api_path) { api_v1_questions_path }
 
   describe 'GET /api/v1/questions' do
     context 'unauthorized' do
@@ -69,7 +69,7 @@ describe 'Questions API', type: :request do
       let(:access_token) { create(:access_token, resource_owner_id: user.id).token}
 
       before do
-        get "/api/v1/questions/#{question.id}", params: {access_token: access_token}, headers: headers
+        get api_v1_question_path(question), params: {access_token: access_token}, headers: headers
       end
 
       context 'Questions' do
@@ -124,7 +124,6 @@ describe 'Questions API', type: :request do
           end
         end
       end
-
 
       context 'Answers' do
         it 'returns array same size' do
