@@ -1,5 +1,8 @@
 require_relative './support/omniauth_mock'
+require 'devise'
 require 'omniauth'
+require 'cancan'
+require 'cancan/matchers'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

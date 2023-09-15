@@ -3,7 +3,7 @@ li(id="question_#{question.id}")
   = link_to question.title, question_path(question)
   p.question(id="question_title_#{question.id}") =question.title
   p.question(id="question_body_#{question.id}") =question.body
-  - if question.author == current_user
+  - if Ability.new(current_user).can?(:delete, question)
     .panel
       = button_to 'Delete', question_path(question),  method: :delete, remote: true, data: { turbo: false}
       = button_to 'Edit', edit_question_path(question), method: :get, remote: true, id: "edit_#{question.id}"

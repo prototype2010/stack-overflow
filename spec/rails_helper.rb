@@ -1,5 +1,9 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'cancan'
+require 'cancan/matchers'
+require_relative '../app/models/ability'
+
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
@@ -35,6 +39,8 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :feature
   config.include FeatureHelpers, type: :feature
+  config.include Devise::TestHelpers, type: :controller
+
 
   Capybara.javascript_driver = :selenium_chrome
   Webdrivers::Chromedriver.required_version = '114.0.5735.90'

@@ -5,7 +5,7 @@ describe 'user can choose best answer', "
   As an authenticated user
   I'd like to be able set best answer
 " do
-  let(:question) { create(:question, :with_answers) }
+  let!(:question) { create(:question, :with_answers) }
   let(:best_answer) { question.answers.first }
 
   describe 'Authenticated user' do
