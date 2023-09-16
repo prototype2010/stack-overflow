@@ -26,7 +26,7 @@ class Ability
 
   def user_abilities
     guest_abilities
-    can :create,[Question, Answer, Comment]
+    can :create, [Question, Answer, Comment]
 
     can :update, Answer do |answer|
       answer.question.author == user || answer.author == user

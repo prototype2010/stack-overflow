@@ -34,7 +34,6 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 RSpec.configure do |config|
-
   config.before(:each, type: :request) do
     default_url_options[:host] = 'localhost'
     default_url_options[:port] = 3000
@@ -47,7 +46,6 @@ RSpec.configure do |config|
   config.include FeatureHelpers, type: :feature
   config.include Devise::TestHelpers, type: :controller
   config.include Helpers, type: :request
-
 
   Capybara.javascript_driver = :selenium_chrome
   Webdrivers::Chromedriver.required_version = '114.0.5735.90'

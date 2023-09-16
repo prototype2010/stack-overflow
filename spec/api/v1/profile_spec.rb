@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe 'Profiles API', type: :request do
-  let(:headers) {
-    { "CONTENT_TYPE": 'application/json' ,
-      "ACCEPT": 'application/json'  }
-  }
+  let(:headers) do
+    { "CONTENT_TYPE": 'application/json',
+      "ACCEPT": 'application/json' }
+  end
   let(:api_path) { '/api/v1/profiles/me' }
 
   describe 'GET /api/v1/profiles/me' do
@@ -16,9 +16,9 @@ describe 'Profiles API', type: :request do
 
     context 'authorized' do
       let(:user) { create(:user) }
-      let(:access_token) { create(:access_token, resource_owner_id: user.id).token}
+      let(:access_token) { create(:access_token, resource_owner_id: user.id).token }
 
-      before { get api_path ,params: {access_token: access_token}, headers: headers }
+      before { get api_path, params: { access_token: access_token }, headers: headers }
 
       it 'returns successful status' do
         expect(response).to be_successful
@@ -32,7 +32,7 @@ describe 'Profiles API', type: :request do
 
       it 'does not return private fields' do
         %w[password encrypted_password].each do |attr|
-          expect(json['user']).to_not have_key attr
+          expect(json['user']).not_to have_key attr
         end
       end
     end

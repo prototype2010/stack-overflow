@@ -25,8 +25,7 @@ class AnswersController < ApplicationController
     @answer.destroy
   end
 
-  def edit
-  end
+  def edit; end
 
   private
 

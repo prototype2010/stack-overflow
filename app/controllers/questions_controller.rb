@@ -13,8 +13,7 @@ class QuestionsController < ApplicationController
     @answer = @question.answers.build
   end
 
-  def edit
-  end
+  def edit; end
 
   def new
     @question = Question.new

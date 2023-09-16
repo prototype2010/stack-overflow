@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 describe 'Users API', type: :request do
-  let(:headers) {
-    { "CONTENT_TYPE": 'application/json' ,
-      "ACCEPT": 'application/json'  }
-  }
-  let(:api_path) {'/api/v1/users' }
-
+  let(:headers) do
+    { "CONTENT_TYPE": 'application/json',
+      "ACCEPT": 'application/json' }
+  end
+  let(:api_path) { '/api/v1/users' }
 
   describe 'GET /api/v1/users' do
     context 'unauthorized' do
@@ -18,9 +17,9 @@ describe 'Users API', type: :request do
     context 'authorized' do
       let!(:users) { create_list(:user, 5) }
       let(:first_user) { users.first }
-      let(:access_token) { create(:access_token, resource_owner_id: first_user.id).token}
+      let(:access_token) { create(:access_token, resource_owner_id: first_user.id).token }
 
-      before { get '/api/v1/users' ,params: {access_token: access_token}, headers: headers }
+      before { get '/api/v1/users', params: { access_token: access_token }, headers: headers }
 
       context 'Users' do
         it 'returns successful status' do
@@ -40,4 +39,3 @@ describe 'Users API', type: :request do
     end
   end
 end
-

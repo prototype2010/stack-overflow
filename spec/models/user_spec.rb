@@ -8,7 +8,7 @@ RSpec.describe User, type: :model do
   describe 'OauthService' do
     let!(:user) { create(:user, email: 'test@gmail.com') }
     let(:auth) do
-      OmniAuth::AuthHash.new(provider: 'github', uid: '123456',info:{ email: 'test@gmail.com'})
+      OmniAuth::AuthHash.new(provider: 'github', uid: '123456', info: { email: 'test@gmail.com' })
     end
     let(:service) { double('FromOmniauth') }
 
@@ -18,6 +18,4 @@ RSpec.describe User, type: :model do
       User.from_omniauth(auth)
     end
   end
-
-
 end

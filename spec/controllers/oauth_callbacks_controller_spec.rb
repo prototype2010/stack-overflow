@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Users::OmniauthCallbacksController, type: :controller do
   before do
-    @request.env["devise.mapping"] = Devise.mappings[:user]
+    @request.env['devise.mapping'] = Devise.mappings[:user]
   end
 
   describe 'Github' do
-    let(:oauth_data) { {provider: 'github', 'uid': 123} }
+    let(:oauth_data) { { provider: 'github', 'uid': 123 } }
 
     it 'finds user from oauth data' do
       allow(request.env).to receive(:[]).and_call_original
@@ -30,7 +30,6 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
       it 'redirects to root path' do
         expect(response).to redirect_to root_path
       end
-
     end
 
     context 'User does not exist' do

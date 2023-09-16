@@ -10,11 +10,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def proceed_oauth_response(kind)
-    @user = User.from_omniauth(request.env["omniauth.auth"])
+    @user = User.from_omniauth(request.env['omniauth.auth'])
 
     if @user
       sign_in_and_redirect @user
-      set_flash_message(:notice,:success, kind: kind)
+      set_flash_message(:notice, :success, kind: kind)
     else
       redirect_to root_path
     end
