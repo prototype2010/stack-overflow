@@ -93,6 +93,7 @@ GEM
       activesupport
     cocoon (1.2.15)
     concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
     crass (1.0.6)
     date (3.3.3)
     declarative (0.0.20)
@@ -287,6 +288,8 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    redis-client (0.17.0)
+      connection_pool
     regexp_parser (2.8.1)
     representable (3.2.0)
       declarative (< 0.1.0)
@@ -351,6 +354,11 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (5.3.0)
       activesupport (>= 5.2.0)
+    sidekiq (7.1.4)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.14.0)
     signet (0.17.0)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.a)
@@ -442,6 +450,7 @@ DEPENDENCIES
   rubocop-rspec (~> 2.22)
   selenium-webdriver
   shoulda-matchers
+  sidekiq
   slim-rails
   sprockets-rails
   stimulus-rails
