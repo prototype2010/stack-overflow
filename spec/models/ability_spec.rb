@@ -21,7 +21,6 @@ RSpec.describe Ability, type: :model do
     it { is_expected.not_to be_able_to :manage, :all }
     it { is_expected.to be_able_to :read, :all }
 
-
     context 'Question' do
       let!(:question) { create(:question) }
       let!(:another_question) { create(:question) }
