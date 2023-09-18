@@ -34,6 +34,7 @@ class QuestionsController < ApplicationController
 
     if @question.save
       redirect_to @question, notice: 'Your question successfully created'
+      DailyDigestService.new.send_digest #### FOR TESTING PURPOSES
     else
       render :new
     end
