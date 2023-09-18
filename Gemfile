@@ -29,6 +29,7 @@ gem "jbuilder"
 gem "oj"
 gem 'sidekiq'
 gem "devise", "~> 4.9"
+gem 'sinatra', require: false
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -66,6 +67,7 @@ gem "omniauth-rails_csrf_protection"
 gem "cancancan"
 # api
 gem "doorkeeper"
+gem 'whenever'
 
 
 group :development, :test do
