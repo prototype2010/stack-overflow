@@ -29,11 +29,15 @@ div(id='reward')
     p Reward:
     p Description:
     = @question.reward.description
+  -if @question.reward.image.attached?
     p Image
     = image_tag(url_for(@question.reward.image), size: '100x100')
 
 .answer-errors
   = render 'shared/errors', resource: @answer
+hr
+  .subscription
+    = render 'shared/subscription', resource: @question, user: current_user
 hr
 = render 'shared/comments', resource: @question, user: current_user
 hr
