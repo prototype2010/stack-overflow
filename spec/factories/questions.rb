@@ -4,6 +4,12 @@ FactoryBot.define do
     body { 'Question body' }
     author { create(:user) }
 
+    trait :with_subscription do
+      after(:create) do |question|
+        create(:subscription, subscriptionable: question, user: create(:user))
+      end
+    end
+
     trait :invalid_title do
       title { nil }
     end
