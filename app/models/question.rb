@@ -16,10 +16,10 @@ class Question < ApplicationRecord
   after_create :subscribe_author_to_updates
 
   private
-
-  def calculate_reputation
-    ReputationJob.perform_later(self)
-  end
+  #
+  # def calculate_reputation
+  #   ReputationJob.perform_later(self)
+  # end
 
   def subscribe_author_to_updates
     self.subscriptions.create(user: author)
