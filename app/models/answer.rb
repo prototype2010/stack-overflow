@@ -14,7 +14,7 @@ class Answer < ApplicationRecord
   private
 
   def notify_subscribers
-    AnswerNotificationJob.perform_now(question)
+    AnswerNotificationJob.perform_later(question)
   end
 
   def set_best_answer

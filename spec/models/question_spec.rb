@@ -5,6 +5,7 @@ RSpec.describe Question, type: :model do
   it { is_expected.to validate_presence_of(:body) }
   it { is_expected.to have_many(:answers) }
   it { is_expected.to have_many(:links) }
+  it { is_expected.to have_many(:subscriptions) }
   it { is_expected.to accept_nested_attributes_for(:links) }
   it { is_expected.to have_db_index(:title) }
 
@@ -12,12 +13,11 @@ RSpec.describe Question, type: :model do
     expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
   end
 
-  describe 'reputation' do
+  describe 'subscriptions' do
     let(:question) { build(:question) }
 
-    it 'calls ReputationJob' do
-      expect(ReputationJob).to receive(:perform_later).with(question)
-      question.save!
+    it 'creates subscription for author' do
+      expect { question.save! }.to change(Subscription, :count).by(1)
     end
   end
 end
