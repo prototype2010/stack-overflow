@@ -1,10 +1,7 @@
 class DailyDigestMailer < ApplicationMailer
-  def digest(user)
+  def digest(user, text)
     @user = user
-    puts '###############'
-    puts 'MAILER  ###############################'
-    puts user
-    puts '###############'
+    @text = text
     mail to: user.email
   end
 end
