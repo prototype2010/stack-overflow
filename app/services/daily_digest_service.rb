@@ -3,7 +3,7 @@ class DailyDigestService
     text = digest_text
 
     User.find_each do |user|
-      DailyDigestMailer.digest(user, text).deliver_now ##### HERE SHOULD BE DELIVER LATER WHEN  EVERYTHING WORKS FINE
+      DailyDigestMailer.digest(user, text).deliver_later
     end
   end
 
@@ -14,13 +14,9 @@ class DailyDigestService
   end
 
   def digest_text
-    "<ul>
-      #{digest_questions
-               .map { |question| "<li>#{question.title}</li></br>" }
-               .join('')
-      }
-    </ul>"
-      .html_safe
+    digest_questions
+      .map(&:title)
+      .join('\n')
   end
 
 end
