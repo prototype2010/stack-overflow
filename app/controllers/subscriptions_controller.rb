@@ -1,21 +1,36 @@
 class SubscriptionsController < ApplicationController
-  def create
-    destroy_existing
+  before_action :find_record
 
-    record.subscriptions.create(user: current_user)
+  def create
+    if @record
+      destroy_existing
+      @record.subscriptions.create(user: current_user)
+    else
+      status 404
+      render plain: 'Record not found'
+    end
   end
 
   def destroy
-    destroy_existing
+    if @record
+      destroy_existing
+    else
+      status 404
+      render plain: 'Record not found'
+    end
   end
 
   private
 
   def destroy_existing
-    record.subscriptions.where(user: current_user).destroy_all
+    @record.subscriptions.where(user: current_user).destroy_all
   end
 
-  def record
-    @record ||= params[:class].constantize.find(params[:parent_id])
+  def find_record
+    klass = params[:class].constantize
+
+    return unless klass.include? Subscriptionable
+
+    @record ||= klass.find(params[:parent_id])
   end
 end
