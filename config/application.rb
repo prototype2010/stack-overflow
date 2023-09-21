@@ -15,7 +15,7 @@ module StackOverflow
     #
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
-
+    config.active_job.queue_adapter = :sidekiq
     config.autoload_paths << "#{root}/app/services"
     # config.time_zone = "Central Time (US & Canada)"
     config.generators do |g|

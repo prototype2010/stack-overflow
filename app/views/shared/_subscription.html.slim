@@ -1,0 +1,18 @@
+p Subscription
+p
+  = button_to 'Subscribe',
+          create_subscription_path(class: resource.class.name, parent_id: resource.id),
+          remote: true,
+          form: { class: 'subscribe',
+                  id: "#{resource.class.name}_subscribe_#{resource.id}",
+                  hidden: subscribed?(resource, user)},
+          method: :post
+  p
+    = button_to 'Unsubscribe',
+            delete_subscription_path(class: resource.class.name, parent_id: resource.id),
+            remote: true,
+            form: { class: 'unsubscribe',
+                    id: "#{resource.class.name}_unsubscribe_#{resource.id}",
+                    hidden: unsubscribed?(resource, user),},
+            method: :delete
+

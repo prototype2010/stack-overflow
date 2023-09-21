@@ -1,4 +1,5 @@
 class Question < ApplicationRecord
+  include Subscriptionable
   include Linkable
   include Rewardable
   include Votable
@@ -10,4 +11,12 @@ class Question < ApplicationRecord
 
   validates :title, presence: true
   validates :body, presence: true
+
+  after_create :subscribe_author_to_updates
+
+  private
+
+  def subscribe_author_to_updates
+    self.subscriptions.create(user: author)
+  end
 end

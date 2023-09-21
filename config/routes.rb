@@ -1,9 +1,20 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  get 'subscriptions/create'
+  get 'subscriptions/destroy'
+  authenticate :user, lambda  { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   use_doorkeeper
   devise_for :users,
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   root to: 'questions#index'
+
+  post 'subscriptions/create', to: 'subscriptions#create', as: 'create_subscription'
+  delete 'subscriptions/destroy', to: 'subscriptions#destroy', as: 'delete_subscription'
 
   post 'comments/create', as: 'create_comment'
   delete 'comments/destroy', as: 'delete_comment'

@@ -4,6 +4,7 @@ class Answer < ApplicationRecord
   include Commentable
 
   before_update :set_best_answer
+  after_create :notify_subscribers
 
   belongs_to :question
   belongs_to :author, class_name: 'User'
@@ -11,6 +12,10 @@ class Answer < ApplicationRecord
   validates :body, presence: true
 
   private
+
+  def notify_subscribers
+    AnswerNotificationJob.perform_later(question)
+  end
 
   def set_best_answer
     return unless best?
