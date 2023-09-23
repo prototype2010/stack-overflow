@@ -9,11 +9,7 @@ class Question < ApplicationRecord
 
   pg_search_scope :search,
                   using: [:tsearch],
-                  against: [:title, :body],
-                  associated_against: {
-                    answers: [:body],
-                    comments: [:body]
-                  }
+                  against: [:title, :body]
 
   has_many :answers, dependent: :destroy
 
@@ -25,6 +21,12 @@ class Question < ApplicationRecord
   after_create :subscribe_author_to_updates
 
   private
+
+  after_save :update_search_indices
+
+  def update_search_indices
+    update_pg_search_document
+  end
 
   def subscribe_author_to_updates
     self.subscriptions.create(user: author)

@@ -17,6 +17,12 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
+  after_save :update_search_indices
+
+  def update_search_indices
+    update_pg_search_document
+  end
+
   private
 
   def notify_subscribers

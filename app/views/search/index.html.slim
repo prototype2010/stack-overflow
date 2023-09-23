@@ -1,0 +1,18 @@
+h1 Find on site
+= form_with method: :get, url: execute_search_path do |f|
+    = f.label :search, 'Search', for: "search_input"
+    = f.text_field :text, id: "search_input"
+    = f.submit 'Find'
+    div
+    = check_box_tag(:search_everywhere, 1, true)
+    = label_tag(:search_everywhere, "Search everywhere")
+    div
+    = check_box_tag(:Question,'Question')
+    = label_tag(:Question, "Find in questions")
+    div
+    = check_box_tag(:Answer, 'Answer')
+    = label_tag(:Answer, "Find in answers")
+    div
+    = check_box_tag(:Comment, 'Comment')
+    = label_tag(:Comment, "Find in comments")
+
