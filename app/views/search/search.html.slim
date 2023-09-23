@@ -5,12 +5,3 @@ h2 Results
   ul
     - @results.each do |record|
         li= make_link_to_parent_question(record)
-/ -if @question.files.attached?
-/     -@question.files.each do |file|
-/         div(id="attachment_#{file.id}")
-/             p= link_to file.filename.to_s, url: rails_storage_proxy_url(file), id: file.signed_id
-/             p= link_to 'x',
-/                     purge_attachment_path(file),
-/                     method: :delete,
-/                     remote: true,
-/                     id:"delete_attachment_#{file.filename.to_s}"
