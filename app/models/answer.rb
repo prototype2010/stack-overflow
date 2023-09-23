@@ -2,6 +2,12 @@ class Answer < ApplicationRecord
   include Linkable
   include Votable
   include Commentable
+  include PgSearch::Model
+  multisearchable against: [:body]
+
+  pg_search_scope :search,
+                  using: [:tsearch],
+                  against: [:body]
 
   before_update :set_best_answer
   after_create :notify_subscribers

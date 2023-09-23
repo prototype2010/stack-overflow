@@ -4,6 +4,16 @@ class Question < ApplicationRecord
   include Rewardable
   include Votable
   include Commentable
+  include PgSearch::Model
+  multisearchable against: [:title, :body]
+
+  pg_search_scope :search,
+                  using: [:tsearch],
+                  against: [:title, :body],
+                  associated_against: {
+                    answers: [:body],
+                    comments: [:body]
+                  }
 
   has_many :answers, dependent: :destroy
 
