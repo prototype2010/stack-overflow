@@ -7,7 +7,7 @@ class SearchService
   end
 
   def call
-    if @params["search_everywhere"]
+    if @params['search_everywhere']
       search_everywhere
     else
       search_by_selected_entities
@@ -17,9 +17,8 @@ class SearchService
   private
 
   def search_by_selected_entities
-    ALLOWED_SEARCH_CLASSES.inject([]) do |results,class_name|
+    ALLOWED_SEARCH_CLASSES.each_with_object([]) do |class_name, results|
       results.concat(class_name.constantize.search(@params[:text]).to_a) if @params[class_name]
-      results
     end
   end
 

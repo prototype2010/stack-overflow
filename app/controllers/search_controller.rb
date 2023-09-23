@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   skip_before_action :authenticate_user!
 
-  def index;end
+  def index; end
 
   def search
     @results = SearchService.new(search_params).call

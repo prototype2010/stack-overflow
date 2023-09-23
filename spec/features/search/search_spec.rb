@@ -5,7 +5,6 @@ RSpec.describe 'any user can search', "
   As any user
   I'd like to be able use search
 " do
-
   let!(:question) { create(:question, :with_comments, :with_answers) }
 
   context 'global search' do
@@ -34,7 +33,6 @@ RSpec.describe 'any user can search', "
 
       expect(page).to have_link question.answers.first.body
     end
-
   end
 
   context 'entity search' do

@@ -5,11 +5,11 @@ class Question < ApplicationRecord
   include Votable
   include Commentable
   include PgSearch::Model
-  multisearchable against: [:title, :body]
+  multisearchable against: %i[title body]
 
   pg_search_scope :search,
                   using: [:tsearch],
-                  against: [:title, :body]
+                  against: %i[title body]
 
   has_many :answers, dependent: :destroy
 
@@ -29,6 +29,6 @@ class Question < ApplicationRecord
   end
 
   def subscribe_author_to_updates
-    self.subscriptions.create(user: author)
+    subscriptions.create(user: author)
   end
 end

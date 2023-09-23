@@ -10,7 +10,6 @@ class Comment < ApplicationRecord
 
   validates :body, presence: true
 
-
   after_save :update_search_indices
 
   def update_search_indices
