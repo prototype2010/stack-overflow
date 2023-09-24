@@ -18,5 +18,4 @@ class DailyDigestService
       .map(&:title)
       .join('\n')
   end
-
 end

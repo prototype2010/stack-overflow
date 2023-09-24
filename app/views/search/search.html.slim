@@ -1,0 +1,7 @@
+h2 Results
+-if @results.empty?
+  ='No records found'
+-else
+  ul
+    - @results.each do |record|
+        li= make_link_to_parent_question(record)

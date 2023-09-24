@@ -2,6 +2,12 @@ class Answer < ApplicationRecord
   include Linkable
   include Votable
   include Commentable
+  include PgSearch::Model
+  multisearchable against: [:body]
+
+  pg_search_scope :search,
+                  using: [:tsearch],
+                  against: [:body]
 
   before_update :set_best_answer
   after_create :notify_subscribers
@@ -10,6 +16,12 @@ class Answer < ApplicationRecord
   belongs_to :author, class_name: 'User'
 
   validates :body, presence: true
+
+  after_save :update_search_indices
+
+  def update_search_indices
+    update_pg_search_document
+  end
 
   private
 
