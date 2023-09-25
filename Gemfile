@@ -80,6 +80,11 @@ group :development, :test do
   gem "rubocop-rspec", "~> 2.22"
   gem "rubocop-factory_bot", "~> 2.23"
   gem 'launchy'
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-passenger', require: false
 end
 
 group :development do
