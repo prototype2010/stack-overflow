@@ -4,7 +4,7 @@
 # You can define all roles on a single server, or split them:
 
 server "root@164.92.136.45", user: "root", roles: %w{app db web}, primary: true
-set :rail_env, :production
+set :rails_env, :production
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
