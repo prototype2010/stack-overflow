@@ -33,6 +33,8 @@
 #ide folder
 .idea
 #local env files
+.env
+.env.production
 .env.test.local
 .env.development.local
 #keys
