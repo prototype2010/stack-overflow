@@ -1,6 +1,6 @@
 = render 'shared/errors', resource: @answer
 - @answer
-= form_with model: [@question, @answer], local: false, format: :js, id: 'new_answer_form' do |f|
+= form_with model: [@question, @answer], local: false, remote: true, id: 'new_answer_form' do |f|
   = f.label :body, 'Respond'
   = f.text_field :body
   = f.label :files
