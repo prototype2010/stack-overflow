@@ -11,7 +11,7 @@ set :repo_url, "git@github.com:prototype2010/stack-overflow.git"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/deployer/stack-overflow"
 set :deploy_user, "root"
-set :branch, 'unicorn'
+set :branch, 'main'
 
 namespace :debug do
   desc 'Print ENV variables'
