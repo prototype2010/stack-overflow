@@ -12,7 +12,7 @@ class Answer < ApplicationRecord
   before_update :set_best_answer
   after_create :notify_subscribers
 
-  belongs_to :question
+  belongs_to :question, touch: true
   belongs_to :author, class_name: 'User'
 
   validates :body, presence: true

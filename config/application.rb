@@ -19,6 +19,7 @@ module StackOverflow
     config.active_job.queue_adapter = :sidekiq
     config.autoload_paths << "#{root}/app/services"
     # config.time_zone = "Central Time (US & Canada)"
+    config.cache_store = :redis_store, 'redis://localhost:6379/0', { expires_in: 90.minutes }
     config.generators do |g|
       g.test_framework :rspec,
                        view_spec: false,

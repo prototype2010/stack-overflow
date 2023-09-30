@@ -1,47 +1,48 @@
-h1= @question.title
-p= @question.body
-= render 'shared/votes', resource: @question, user: current_user
-p Links
-ul(id='question_links')
-  - @question.links.each do |link|
-    li(id="link_#{link.id}")
-      - if gist_url?(link.url)
-        = render 'shared/gist_loader', link: link
-      - else
-        a(href="#{link.url}")= link.name
-        = button_to 'Remove link', delete_link_path(link.id), method: :delete, remote: true
-hr
--if @question.files.attached?
-  -@question.files.each do |file|
-    div(id="attachment_#{file.id}")
-      p= link_to file.filename.to_s, url: rails_storage_proxy_url(file), id: file.signed_id
-      p= link_to 'x',
-              purge_attachment_path(file),
-              method: :delete,
-              remote: true,
-              id:"delete_attachment_#{file.filename.to_s}"
-hr
--if can?(:create, Answer)
-  = render 'answers/form'
-hr
-div(id='reward')
-  - if @question.reward.present?
-    p Reward:
-    p Description:
-    = @question.reward.description
-  -if @question.reward&.image&.attached?
-    p Image
-    = image_tag(url_for(@question.reward.image), size: '100x100')
+- cache @question do
+  h1= @question.title
+  p= @question.body
+  = render 'shared/votes', resource: @question, user: current_user
+  p Links
+  ul(id='question_links')
+    - @question.links.each do |link|
+      li(id="link_#{link.id}")
+        - if gist_url?(link.url)
+          = render 'shared/gist_loader', link: link
+        - else
+          a(href="#{link.url}")= link.name
+          = button_to 'Remove link', delete_link_path(link.id), method: :delete, remote: true
+  hr
+  -if @question.files.attached?
+    -@question.files.each do |file|
+      div(id="attachment_#{file.id}")
+        p= link_to file.filename.to_s, url: rails_storage_proxy_url(file), id: file.signed_id
+        p= link_to 'x',
+                purge_attachment_path(file),
+                method: :delete,
+                remote: true,
+                id:"delete_attachment_#{file.filename.to_s}"
+  hr
+  -if can?(:create, Answer)
+    = render 'answers/form'
+  hr
+  div(id='reward')
+    - if @question.reward.present?
+      p Reward:
+      p Description:
+      = @question.reward.description
+    -if @question.reward&.image&.attached?
+      p Image
+      = image_tag(url_for(@question.reward.image), size: '100x100')
 
-.answer-errors
-  = render 'shared/errors', resource: @answer
-hr
-  .subscription
-    = render 'shared/subscription', resource: @question, user: current_user
-hr
-= render 'shared/comments', resource: @question, user: current_user
-hr
-p Answers
-.answers
-  = render @question.answers.order(best: :desc), user: current_user
+  .answer-errors
+    = render 'shared/errors', resource: @answer
+  hr
+    .subscription
+      = render 'shared/subscription', resource: @question, user: current_user
+  hr
+  = render 'shared/comments', resource: @question, user: current_user
+  hr
+  p Answers
+  .answers
+    = render @question.answers.order(best: :desc), user: current_user
 
