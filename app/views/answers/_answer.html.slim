@@ -1,62 +1,63 @@
-div(id="answer_#{answer.id}")
-  - if answer.best?
-    = '[BEST ANSWER]'
-  br
-  = render 'shared/votes', resource: answer, user: user
-  br
-  p Links
-  ul
-    - answer.links.each do |link|
-      li(id="link_#{link.id}")
-        - if gist_url?(link.url)
-          = render 'shared/gist_loader', link: link
-        - else
-          a(href="#{link.url}")= link.name
-          =render 'shared/remove_link_button', link: link
-  hr
-  = render 'shared/comments', resource: answer, user: user
-  hr
-  p.answer(id="answer_text_#{answer.id}") =answer.body
-  p
-    - answer.files.each do |file|
-      div(id="attachment_#{file.id}")
-        p= link_to file.filename.to_s, rails_storage_proxy_url(file), id: file.signed_id
-        - if Ability.new(user).can?(:delete, answer)
-          p= link_to 'x',
-                  purge_attachment_path(file),
-                  method: :delete,
-                  remote: true,
-                  id: "delete_attachment_#{file.filename.to_s}"
+- cache answer do
+  div(id="answer_#{answer.id}")
+    - if answer.best?
+      = '[BEST ANSWER]'
+    br
+    = render 'shared/votes', resource: answer, user: user
+    br
+    p Links
+    ul
+      - answer.links.each do |link|
+        li(id="link_#{link.id}")
+          - if gist_url?(link.url)
+            = render 'shared/gist_loader', link: link
+          - else
+            a(href="#{link.url}")= link.name
+            = render 'shared/remove_link_button', link: link
+    hr
+    = render 'shared/comments', resource: answer, user: user
+    hr
+    p.answer(id="answer_text_#{answer.id}") = answer.body
+    p
+      - answer.files.each do |file|
+        div(id="attachment_#{file.id}")
+          p= link_to file.filename.to_s, rails_storage_proxy_url(file), id: file.signed_id
+          - if Ability.new(user).can?(:delete, answer)
+            p= link_to 'x',
+                    purge_attachment_path(file),
+                    method: :delete,
+                    remote: true,
+                    id: "delete_attachment_#{file.filename.to_s}"
 
-  - if Ability.new(user).can?(:update, answer.question) && !answer.best?
-    = form_with model: answer, method: :put, remote: false do |f|
-      = f.check_box :best, checked: true, hidden: true
-      = f.submit 'Set best'
-  - if Ability.new(user).can?(:delete, answer)
-    .panel
-      = button_to 'Delete', answer_path(answer),  method: :delete, remote: true
-      = button_to 'Edit', edit_answer_path(answer), method: :get, remote: true, id: "edit_#{answer.id}"
-      = button_to 'Cancel', edit_answer_path(answer),
-              method: :get,
-              remote: true,
-              id: "cancel_#{answer.id}", style: 'display: none'
-    .errors(hidden=true style="color:red" id="errors_#{answer.id}")
-    .edit_form(hidden=true id="edit_form_#{answer.id}")
-      = form_with model: answer, method: :put, local: false do |f|
-        = f.label :body, 'Respond'
-        = f.text_field :body, name: 'answer[body]'
-        = f.label :files
-        = f.file_field :files, multiple: true, direct_upload: true
+    - if Ability.new(user).can?(:update, answer.question) && !answer.best?
+      = form_with model: answer, method: :put, remote: false do |f|
+        = f.check_box :best, checked: true, hidden: true
+        = f.submit 'Set best'
+    - if Ability.new(user).can?(:delete, answer)
+      .panel
+        = button_to 'Delete', answer_path(answer), method: :delete, remote: true
+        = button_to 'Edit', edit_answer_path(answer), method: :get, remote: true, id: "edit_#{answer.id}"
+        = button_to 'Cancel', edit_answer_path(answer),
+                method: :get,
+                remote: true,
+                id: "cancel_#{answer.id}", style: 'display: none'
+      .errors(hidden=true style="color:red" id="errors_#{answer.id}")
+      .edit_form(hidden=true id="edit_form_#{answer.id}")
+        = form_with model: answer, method: :put, local: false do |f|
+          = f.label :body, 'Respond'
+          = f.text_field :body, name: 'answer[body]'
+          = f.label :files
+          = f.file_field :files, multiple: true, direct_upload: true
 
-        = f.fields_for :links do |link_form|
-          p Link
-          .field
-            = link_form.label :name
-            = link_form.text_field :name
-          .field
-            = link_form.label :url
-            = link_form.text_field :url
-        .links
-          = link_to_add_association 'add link', f, :links
+          = f.fields_for :links do |link_form|
+            p Link
+            .field
+              = link_form.label :name
+              = link_form.text_field :name
+            .field
+              = link_form.label :url
+              = link_form.text_field :url
+          .links
+            = link_to_add_association 'add link', f, :links
 
-        = f.submit 'Update response'
+          = f.submit 'Update response'
